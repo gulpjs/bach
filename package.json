@@ -1,0 +1,37 @@
+{
+  "name": "bach",
+  "version": "0.0.0",
+  "description": "Compose async functions",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tap ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/phated/bach"
+  },
+  "keywords": [
+    "async",
+    "compose",
+    "fluent",
+    "composing"
+  ],
+  "author": "Blaine Bublitz <blaine@iceddev.com> (http://iceddev.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phated/bach/issues"
+  },
+  "homepage": "https://github.com/phated/bach",
+  "devDependencies": {
+    "tap": "~0.4.8"
+  },
+  "dependencies": {
+    "async-settle": "~0.1.0",
+    "async-done": "~0.2.0",
+    "async": "~0.2.10",
+    "lodash": "~2.4.1"
+  }
+}
