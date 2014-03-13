@@ -2,15 +2,13 @@
 
 var _ = require('lodash');
 var async = require('async');
-var asyncSettle = require('async-settle');
-
-var onComplete = require('./lib/onComplete');
+var asyncDone = require('async-done');
 
 function buildParallel(){
   var args = _.flatten(arguments);
 
   function parallel(done){
-    async.map(args, asyncSettle, onComplete(done));
+    async.map(args, asyncDone, done);
   }
 
   return parallel;
