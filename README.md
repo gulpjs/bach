@@ -107,4 +107,55 @@ parallelPromises(function(err, res){
 });
 ```
 
+All errors are caught in a [domain](http://nodejs.org/api/domain.html) and passed to the final callback as the first argument.
+
+```js
+function success(cb){
+  setTimeout(function(){
+    cb(null, 1);
+  }, 500);
+}
+
+function error(){
+  throw new Error('Thrown Error');
+}
+
+var errorThrownFn = bach.parallel(error, success);
+errorThrownFn(function(err, res){
+  if(err){
+    // handle error
+    // in this example, err is an error caught by the domain
+  }
+  // handle results
+  // in this example, res is [undefined]
+});
+```
+
+Something that may be encountered when an error happens in a parallel composition is the callback
+will be called as soon as the error happens. If you want to continue on error and wait until all
+functions have finished before calling the callback, use `settleSeries` or `settleParallel`.
+
+```js
+function success(cb){
+  setTimeout(function(){
+    cb(null, 1);
+  }, 500);
+}
+
+function error(cb){
+  cb(new Error('Async Error'));
+}
+
+var parallelSettlingFn = bach.settleParallel(success, error);
+parallelSettlingFn(function(err, res){
+  // all functions have finished executing
+  if(err){
+    // handle error
+    // in this example, err is an error passed to the callback
+  }
+  // handle results
+  // in this example, res is undefined
+});
+```
+
 ## API
