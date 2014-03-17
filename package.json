@@ -1,7 +1,7 @@
 {
   "name": "bach",
   "version": "0.0.0",
-  "description": "Compose async functions",
+  "description": "Compose your async functions with elegance",
   "main": "index.js",
   "directories": {
     "test": "test"
