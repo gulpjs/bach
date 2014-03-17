@@ -45,4 +45,19 @@ parallelFn(function(err, res){
 });
 ```
 
+Since the composer functions just return a function that can be called, you combine them.
+
+```js
+var combinedFn = bach.series(fn1, bach.parallel(fn2, fn3));
+// fn1 will be executed before fn2 and fn3 are run in parallel
+combinedFn(function(err, res){
+  if(err){ // in this example, err is undefined
+    // handle error
+  }
+  // handle results
+  // in this example, res is [1, [2, 3]]
+});
+
+```
+
 ## API
