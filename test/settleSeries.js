@@ -40,9 +40,11 @@ test('should execute functions in series and call callback with errors on settle
   }
   bach.settleSeries(fn1, slowFn, fn3, fnError)(function(errors, results){
     t.ok(errors, 'errors should be defined');
-    t.notOk(results, 'results should be undefined');
+    t.ok(results, 'results should be defined');
     t.ok(Array.isArray(errors), 'errors should be an array');
+    t.ok(Array.isArray(results), 'results should be an array');
     t.ok(errors[0] instanceof Error, 'errors should be an array of Error instances');
+    t.deepEqual(results, [1, 2, 3], 'results should be [1, 2, 3]');
     t.end();
   });
 });
