@@ -45,7 +45,7 @@ parallelFn(function(err, res){
 });
 ```
 
-Since the composer functions just return a function that can be called, you combine them.
+Since the composer functions just return a function that can be called, you can combine them.
 
 ```js
 var combinedFn = bach.series(fn1, bach.parallel(fn2, fn3));
@@ -57,7 +57,54 @@ combinedFn(function(err, res){
   // handle results
   // in this example, res is [1, [2, 3]]
 });
+```
 
+Functions are called with [async-done](https://github.com/phated/async-done), so you can return a stream or promise.
+The function will complete when the stream ends/closes/errors or the promise fulfills/rejects.
+
+```js
+// streams
+var fs = require('fs');
+
+function streamFn1(){
+  return fs.createReadStream('./example')
+    .pipe(fs.createWriteStream('./example'));
+}
+
+function streamFn2(){
+  return fs.createReadStream('./example')
+    .pipe(fs.createWriteStream('./example'));
+}
+
+var parallelStreams = bach.parallel(streamFn1, streamFn2);
+parallelStreams(function(err){
+  if(err){ // in this example, err is undefined
+    // handle error
+  }
+  // all streams have emitted an 'end' or 'close' event
+});
+```
+
+```js
+// promises
+var when = require('when');
+
+function promiseFn1(){
+  return when.resolve(1);
+}
+
+function promiseFn2(){
+  return when.resolve(2);
+}
+
+var parallelPromises = bach.parallel(promiseFn1, promiseFn2);
+parallelPromises(function(err, res){
+  if(err){ // in this example, err is undefined
+    // handle error
+  }
+  // handle results
+  // in this example, res is [1, 2]
+});
 ```
 
 ## API
