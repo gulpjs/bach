@@ -154,8 +154,42 @@ parallelSettlingFn(function(err, res){
     // in this example, err is an error passed to the callback
   }
   // handle results
-  // in this example, res is undefined
+  // in this example, res is [1]
 });
 ```
 
 ## API
+
+__All bach APIs return an invoker function that takes a single callback as its only parameter.
+The function signature is `function(error, results)`.__
+
+### `series([executor, ])` : Function
+
+All `executor` functions passed to this function will be called in series when the returned function is
+called.  If an error occurs, execution will stop and the error will be passed to the callback function
+as the first parameter.
+
+__The error parameter will always be a single error.__
+
+### `parallel([executor, ])` : Function
+
+All `executor` functions passed to this function will be called in parallel when the returned function is
+called.  If an error occurs, the error will be passed to the callback function
+as the first parameter. Any async functions that have not completed, will still complete, but their results
+will __not__ be available.
+
+__The error parameter will always be a single error.__
+
+### `settleSeries([executor, ])` : Function
+
+All `executor` functions passed to this function will be called in series when the returned function is
+called. All functions will always be called and the callback will receive all settled errors and results.
+
+__The error parameter will always be an array of errors.__
+
+### `settleParallel([executor, ])` : Function
+
+All `executor` functions passed to this function will be called in parallel when the returned function is
+called. All functions will always be called and the callback will receive all settled errors and results.
+
+__The error parameter will always be an array of errors.__
