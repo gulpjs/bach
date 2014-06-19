@@ -163,7 +163,7 @@ parallelSettlingFn(function(err, res){
 __All bach APIs return an invoker function that takes a single callback as its only parameter.
 The function signature is `function(error, results)`.__
 
-### `series([executor, ])` : Function
+### `series([executor, ])` => Function
 
 All `executor` functions passed to this function will be called in series when the returned function is
 called.  If an error occurs, execution will stop and the error will be passed to the callback function
@@ -171,7 +171,7 @@ as the first parameter.
 
 __The error parameter will always be a single error.__
 
-### `parallel([executor, ])` : Function
+### `parallel([executor, ])` => Function
 
 All `executor` functions passed to this function will be called in parallel when the returned function is
 called.  If an error occurs, the error will be passed to the callback function
@@ -180,14 +180,14 @@ will __not__ be available.
 
 __The error parameter will always be a single error.__
 
-### `settleSeries([executor, ])` : Function
+### `settleSeries([executor, ])` => Function
 
 All `executor` functions passed to this function will be called in series when the returned function is
 called. All functions will always be called and the callback will receive all settled errors and results.
 
 __The error parameter will always be an array of errors.__
 
-### `settleParallel([executor, ])` : Function
+### `settleParallel([executor, ])` => Function
 
 All `executor` functions passed to this function will be called in parallel when the returned function is
 called. All functions will always be called and the callback will receive all settled errors and results.
