@@ -4,7 +4,7 @@ var _ = require('lodash');
 var async = require('async');
 var asyncSettle = require('async-settle');
 
-var onSettled = require('./lib/onSettled');
+var onSettled = require('../lib/onSettled');
 
 function buildParallel(){
   var args = _.flatten(arguments);
