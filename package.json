@@ -29,9 +29,10 @@
     "tap": "~0.4.8"
   },
   "dependencies": {
-    "async-settle": "~0.1.0",
-    "async-done": "~0.2.0",
     "async": "~0.2.10",
+    "async-done": "~0.2.0",
+    "async-settle": "~0.1.0",
+    "async-time": "~0.0.1",
     "lodash": "~2.4.1"
   }
 }
