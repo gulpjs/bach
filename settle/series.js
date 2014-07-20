@@ -6,7 +6,7 @@ var asyncSettle = require('async-settle');
 
 var onSettled = require('../lib/onSettled');
 
-function buildParallel(){
+function buildSeries(){
   var args = _.flatten(arguments);
 
   function settleSeries(done){
@@ -16,4 +16,4 @@ function buildParallel(){
   return settleSeries;
 }
 
-module.exports = buildParallel;
+module.exports = buildSeries;
