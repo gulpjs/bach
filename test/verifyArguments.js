@@ -26,7 +26,7 @@ test('should throw descriptive error message on when no arguments provided', fun
   t.throws(function(){
     verifyArguments([]);
   }, {
-    name: 'AssertionError', message: 'A set of functions to combine is mandatory'
+    name: 'AssertionError', message: 'A set of functions to combine is required'
   }, 'should throw AssertionError');
   t.end();
 });

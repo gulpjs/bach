@@ -41,7 +41,7 @@ test('should execute functions in parallel and call callback with error on an er
   bach.parallel(fn1, slowFn, fn3, fnError)(function(error, results){
     t.ok(error, 'error should be defined');
     t.ok(results, 'results should be defined');
-    t.deepEqual(results, [1, , 3, undefined], 'results should be [1, , 3, undefined]');
+    t.deepEqual(results, [1, undefined, 3, undefined], 'results should be [1, undefined, 3, undefined]');
     t.ok(error instanceof Error, 'error should be instance of an Error');
     t.end();
   });
