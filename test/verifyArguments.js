@@ -2,7 +2,7 @@
 
 var test = require('tap').test;
 
-var verifyArguments = require('../lib/verifyArguments');
+var verifyArguments = require('../lib/helpers').verifyArguments;
 
 function validArg() {
 }
