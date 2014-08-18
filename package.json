@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "tap ./test"
+    "test": "tap ./test/*.js",
+    "cover": "istanbul cover ./test/cover/index.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,8 @@
   },
   "homepage": "https://github.com/phated/bach",
   "devDependencies": {
+    "istanbul": "^0.3.0",
+    "require-dir": "^0.1.0",
     "tap": "~0.4.8"
   },
   "dependencies": {
