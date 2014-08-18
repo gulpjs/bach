@@ -2,7 +2,7 @@
 
 var test = require('tap').test;
 
-var bach = require('../settle');
+var bach = require('../');
 
 function fn1(done){
   done(null, 1);
@@ -23,7 +23,7 @@ function fnError(done){
 }
 
 test('should execute functions in parallel and call callback with results on settled', function(t){
-  bach.parallel(fn1, fn2, fn3)(function(errors, results){
+  bach.settleParallel(fn1, fn2, fn3)(function(errors, results){
     t.notOk(errors, 'errors should be undefined');
     t.ok(results, 'results should be defined');
     t.deepEqual(results, [1, 2, 3], 'results should be [1, 2, 3]');
@@ -38,7 +38,7 @@ test('should execute functions in parallel and call callback with errors on sett
       done(null, 2);
     }, 500);
   }
-  bach.parallel(fn1, slowFn, fn3, fnError)(function(errors, results){
+  bach.settleParallel(fn1, slowFn, fn3, fnError)(function(errors, results){
     t.ok(errors, 'errors should be defined');
     t.ok(results, 'results should be defined');
     t.ok(Array.isArray(errors), 'errors should be an array');
