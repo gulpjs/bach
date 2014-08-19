@@ -163,33 +163,62 @@ parallelSettlingFn(function(err, res){
 __All bach APIs return an invoker function that takes a single callback as its only parameter.
 The function signature is `function(error, results)`.__
 
-### `series([executor, ])` => Function
+Each method can optionally be passed an object of [extension point functions](#extension-points)
+as the last argument.
 
-All `executor` functions passed to this function will be called in series when the returned function is
+### `series(fns..., [extensions])` => Function
+
+All functions (`fns`) passed to this function will be called in series when the returned function is
 called.  If an error occurs, execution will stop and the error will be passed to the callback function
 as the first parameter.
 
 __The error parameter will always be a single error.__
 
-### `parallel([executor, ])` => Function
+### `parallel(fns..., [extensions])` => Function
 
-All `executor` functions passed to this function will be called in parallel when the returned function is
-called.  If an error occurs, the error will be passed to the callback function
-as the first parameter. Any async functions that have not completed, will still complete, but their results
-will __not__ be available.
+All functions (`fns`) passed to this function will be called in parallel when the returned
+function is called.  If an error occurs, the error will be passed to the callback function
+as the first parameter. Any async functions that have not completed, will still complete,
+but their results will __not__ be available.
 
 __The error parameter will always be a single error.__
 
-### `settleSeries([executor, ])` => Function
+### `settleSeries(fns..., [extensions])` => Function
 
-All `executor` functions passed to this function will be called in series when the returned function is
+All functions (`fns`) passed to this function will be called in series when the returned function is
 called. All functions will always be called and the callback will receive all settled errors and results.
 
 __The error parameter will always be an array of errors.__
 
-### `settleParallel([executor, ])` => Function
+### `settleParallel(fns..., [extensions])` => Function
 
-All `executor` functions passed to this function will be called in parallel when the returned function is
+All functions (`fns`) passed to this function will be called in parallel when the returned function is
 called. All functions will always be called and the callback will receive all settled errors and results.
 
 __The error parameter will always be an array of errors.__
+
+### Extension Points
+
+An extension point object can contain:
+
+#### `create(fn, key)` => `storage` object
+
+Called before the async function or extension points are called. Receives the function and key to be
+executed in the future.  The return value should be any object and will be passed to the other extension
+point methods.  The storage object can keep any information needed between extension points and can
+be mutated within extension points.
+
+#### `before(storage)`
+
+Called before the async function is executed. Receives the storage object returned from the `create`
+extension point.
+
+#### `after(storage)`
+
+Called after the async function is executed and completes successfully. Receives the storage object
+returned from the `create` extension point.
+
+#### `error(storage)`
+
+Called after the async function is executed and errors. Receives the storage object returned from
+the `create` extension point.
