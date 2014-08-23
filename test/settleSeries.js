@@ -1,6 +1,13 @@
 'use strict';
 
-var test = require('tap').test;
+var lab = exports.lab = require('lab').script();
+var describe = lab.describe;
+var it = lab.it;
+var before = lab.before;
+var beforeEach = lab.beforeEach;
+var after = lab.after;
+var afterEach = lab.afterEach;
+var expect = require('lab').expect;
 
 var bach = require('../');
 
@@ -22,29 +29,51 @@ function fnError(done){
   done(new Error('An Error Occurred'));
 }
 
-test('should execute functions in series and call callback with results on settled', function(t){
-  bach.settleSeries(fn1, fn2, fn3)(function(errors, results){
-    t.notOk(errors, 'errors should be undefined');
-    t.ok(results, 'results should be defined');
-    t.deepEqual(results, [1, 2, 3], 'results should be [1, 2, 3]');
-    t.end();
-  });
-});
+describe('settleSeries', function(){
 
-test('should execute functions in series and call callback with errors on settled', function(t){
-  function slowFn(done){
-    setTimeout(function(){
-      t.ok(true, 'slow function should be called');
-      done(null, 2);
-    }, 500);
-  }
-  bach.settleSeries(fn1, slowFn, fn3, fnError)(function(errors, results){
-    t.ok(errors, 'errors should be defined');
-    t.ok(results, 'results should be defined');
-    t.ok(Array.isArray(errors), 'errors should be an array');
-    t.ok(Array.isArray(results), 'results should be an array');
-    t.ok(errors[0] instanceof Error, 'errors should be an array of Error instances');
-    t.deepEqual(results, [1, 2, 3], 'results should be [1, 2, 3]');
-    t.end();
+  it('should execute functions in series and call callback with results on settled', function(done){
+    bach.settleSeries(fn1, fn2, fn3)(function(errors, results){
+      expect(errors).to.equal(null);
+      expect(results).to.deep.equal([1, 2, 3]);
+      done();
+    });
+  });
+
+  it('should execute functions in series and call callback with errors on settled', function(done){
+    function slowFn(done){
+      setTimeout(function(){
+        done(null, 2);
+      }, 500);
+    }
+    bach.settleSeries(fn1, slowFn, fn3, fnError)(function(errors, results){
+      expect(errors)
+        .to.be.an('array')
+        .and.to.have.property('0')
+        .that.is.an.instanceof(Error);
+      expect(results).to.deep.equal([1, 2, 3]);
+      done();
+    });
+  });
+
+  it('should take extension points and call them for each function', function(done){
+    var arr = [];
+    var fns = [fn1, fn2, fn3];
+    bach.settleSeries(fn1, fn2, fn3, {
+      create: function(fn, idx){
+        expect(fns).to.include(fn);
+        arr[idx] = fn;
+        return arr;
+      },
+      before: function(storage){
+        expect(storage).to.equal(arr);
+      },
+      after: function(storage){
+        expect(storage).to.equal(arr);
+      }
+    })(function(error, results){
+      expect(error).to.equal(null);
+      expect(arr).to.deep.include.members(fns);
+    });
+    done();
   });
 });
