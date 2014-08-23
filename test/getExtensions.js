@@ -10,8 +10,8 @@ test('should return the argument if it is an object', function(t){
   t.end();
 });
 
-test('should return a new object if argument is not an object', function(t){
+test('should return undefined if argument is not an object', function(t){
   var fn = function(){};
-  t.deepEqual(getExtensions(fn), {}, 'should be an object');
+  t.deepEqual(getExtensions(fn), undefined, 'should be a undefined');
   t.end();
 });
