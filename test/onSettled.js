@@ -26,6 +26,14 @@ describe('onSettled', function(){
     })(null, errors);
   });
 
+  it('should error early if called with an error', function(done){
+    onSettled(function(err, results){
+      expect(err).to.be.an.instanceof(Error);
+      expect(results).to.equal(null);
+      done();
+    })(new Error('Should not happen'));
+  });
+
   it('should handle the no callback case', function(done){
     onSettled()(null, errors);
     done();

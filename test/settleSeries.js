@@ -54,4 +54,26 @@ describe('settleSeries', function(){
       done();
     });
   });
+
+  it('should take extension points and call them for each function', function(done){
+    var arr = [];
+    var fns = [fn1, fn2, fn3];
+    bach.settleSeries(fn1, fn2, fn3, {
+      create: function(fn, idx){
+        expect(fns).to.include(fn);
+        arr[idx] = fn;
+        return arr;
+      },
+      before: function(storage){
+        expect(storage).to.equal(arr);
+      },
+      after: function(storage){
+        expect(storage).to.equal(arr);
+      }
+    })(function(error, results){
+      expect(error).to.equal(null);
+      expect(arr).to.deep.include.members(fns);
+    });
+    done();
+  });
 });
