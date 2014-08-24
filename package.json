@@ -1,6 +1,6 @@
 {
   "name": "bach",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Compose your async functions with elegance",
   "main": "index.js",
   "directories": {
