@@ -26,12 +26,7 @@ describe('verifyArguments', function(){
       verifyArguments([validArg, 'invalid', validArg]);
     }
 
-    var expected = {
-      name: 'AssertionError',
-      message: 'Only functions can be combined, got string for argument 1'
-    };
-
-    expect(invalid).to.throw(expected);
+    expect(invalid).to.throw('Only functions can be combined, got string for argument 1');
     done();
   });
 
@@ -40,12 +35,7 @@ describe('verifyArguments', function(){
       verifyArguments([]);
     }
 
-    var expected = {
-      name: 'AssertionError',
-      message: 'A set of functions to combine is required'
-    };
-
-    expect(empty).to.throw(expected);
+    expect(empty).to.throw('A set of functions to combine is required');
     done();
   });
 });
