@@ -67,7 +67,7 @@ describe('settleSeries', function(){
       before: function(storage){
         expect(storage).to.equal(arr);
       },
-      after: function(storage){
+      after: function(result, storage){
         expect(storage).to.equal(arr);
       }
     })(function(error, results){
