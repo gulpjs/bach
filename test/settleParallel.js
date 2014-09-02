@@ -31,7 +31,7 @@ function fnError(done){
 
 describe('settleParallel', function(){
 
-  it('should execute functions in parallel and call callback with results on settled', function(done){
+  it('should execute functions in parallel, passing settled results', function(done){
     bach.settleParallel(fn1, fn2, fn3)(function(errors, results){
       expect(errors).to.equal(null);
       expect(results).to.deep.equal([1, 2, 3]);
@@ -39,7 +39,7 @@ describe('settleParallel', function(){
     });
   });
 
-  it('should execute functions in parallel and call callback with errors on settled', function(done){
+  it('should execute functions in parallel, passing settled errors and results', function(done){
     function slowFn(done){
       setTimeout(function(){
         done(null, 2);

@@ -2,36 +2,59 @@
   "name": "bach",
   "version": "0.3.0",
   "description": "Compose your async functions with elegance",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "lab -cv"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/phated/bach"
-  },
-  "keywords": [
-    "async",
-    "compose",
-    "fluent",
-    "composing"
-  ],
   "author": "Blaine Bublitz <blaine@iceddev.com> (http://iceddev.com/)",
+  "contributors": [
+    "Blaine Bublitz <blaine@iceddev.com> (http://iceddev.com/)",
+    "Pawel Kozlowski <pkozlowski.opensource@gmail.com>",
+    "Benjamin Tan <demoneaux@gmail.com> (https://d10.github.io/)"
+  ],
+  "repository": "phated/bach",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/phated/bach/issues"
+  "engines": {
+    "node": ">= 0.10"
   },
-  "homepage": "https://github.com/phated/bach",
-  "devDependencies": {
-    "lab": "^4.1.0"
+  "main": "index.js",
+  "scripts": {
+    "test": "lab -cv",
+    "lint": "jshint test lib index.js --reporter node_modules/jshint-stylish/stylish.js --exclude node_modules"
   },
   "dependencies": {
     "async-done": "~0.4.0",
     "async-settle": "~0.2.0",
     "lodash": "~2.4.1",
     "now-and-later": "0.0.5"
-  }
+  },
+  "devDependencies": {
+    "jshint": "^2.5.5",
+    "jshint-stylish": "^0.4.0",
+    "lab": "^4.1.0"
+  },
+  "keywords": [
+    "compose",
+    "fluent",
+    "composing",
+    "continuation",
+    "function composition",
+    "functional",
+    "async",
+    "map",
+    "series",
+    "parallel",
+    "extension",
+    "tracing",
+    "debug",
+    "timing",
+    "aop",
+    "settle",
+    "promises",
+    "callbacks",
+    "observables",
+    "streams",
+    "end",
+    "completion",
+    "complete",
+    "finish",
+    "done",
+    "error handling"
+  ]
 }
