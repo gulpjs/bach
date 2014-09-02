@@ -31,7 +31,7 @@ function fnError(done){
 
 describe('series', function(){
 
-  it('should execute functions in series and call callback with results on completion', function(done){
+  it('should execute functions in series, passing results', function(done){
     bach.series(fn1, fn2, fn3)(function(error, results){
       expect(error).to.equal(null);
       expect(results).to.deep.equal([1, 2, 3]);
@@ -39,7 +39,7 @@ describe('series', function(){
     });
   });
 
-  it('should execute functions in series and call callback with error on an error', function(done){
+  it('should execute functions in series, passing error', function(done){
     function slowFn(done){
       setTimeout(function(){
         done(null, 2);
