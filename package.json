@@ -24,10 +24,10 @@
     "lint": "jshint test lib index.js --reporter node_modules/jshint-stylish/stylish.js --exclude node_modules"
   },
   "dependencies": {
-    "async-done": "~0.4.0",
-    "async-settle": "~0.2.0",
-    "lodash": "~2.4.1",
-    "now-and-later": "0.0.5"
+    "async-done": "^1.0.0",
+    "async-settle": "^0.2.0",
+    "lodash": "^2.4.1",
+    "now-and-later": "0.0.6"
   },
   "devDependencies": {
     "jshint": "^2.5.5",
