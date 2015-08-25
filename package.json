@@ -26,6 +26,7 @@
   "dependencies": {
     "async-done": "^1.0.0",
     "async-settle": "^0.2.0",
+    "lazy-cache": "^0.2.3",
     "lodash": "^3.0.0",
     "now-and-later": "0.0.6"
   },
