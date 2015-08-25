@@ -1,8 +1,9 @@
 'use strict';
 
-module.exports = {
-  series: require('./lib/series'),
-  parallel: require('./lib/parallel'),
-  settleSeries: require('./lib/settleSeries'),
-  settleParallel: require('./lib/settleParallel')
-};
+var lazy = require('lazy-cache')(require);
+lazy('./lib/series', 'series');
+lazy('./lib/parallel', 'parallel');
+lazy('./lib/settleSeries', 'settleSeries');
+lazy('./lib/settleParallel', 'settleParallel');
+
+module.exports = lazy;
