@@ -7,7 +7,7 @@ var before = lab.before;
 var beforeEach = lab.beforeEach;
 var after = lab.after;
 var afterEach = lab.afterEach;
-var expect = require('lab').expect;
+var expect = require('code').expect;
 
 var bach = require('../');
 
@@ -69,7 +69,7 @@ describe('series', function(){
       }
     })(function(error, results){
       expect(error).to.equal(null);
-      expect(arr).to.deep.include.members(fns);
+      expect(arr).to.deep.include(fns);
     });
     done();
   });

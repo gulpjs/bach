@@ -7,7 +7,7 @@ var before = lab.before;
 var beforeEach = lab.beforeEach;
 var after = lab.after;
 var afterEach = lab.afterEach;
-var expect = require('lab').expect;
+var expect = require('code').expect;
 
 var bach = require('../');
 
@@ -47,9 +47,10 @@ describe('settleSeries', function(){
     }
     bach.settleSeries(fn1, slowFn, fn3, fnError)(function(errors, results){
       expect(errors)
-        .to.be.an('array')
-        .and.to.have.property('0')
-        .that.is.an.instanceof(Error);
+        .to.be.an.array()
+        .and.to.not.be.empty();
+      expect(errors[0])
+        .to.be.an.instanceof(Error);
       expect(results).to.deep.equal([1, 2, 3]);
       done();
     });
