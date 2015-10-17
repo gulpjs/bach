@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "test": "lab -cv",
-    "lint": "jshint test lib index.js --reporter node_modules/jshint-stylish/stylish.js --exclude node_modules"
+    "lint": "jshint test lib index.js --reporter node_modules/jshint-stylish/index.js --exclude node_modules"
   },
   "dependencies": {
     "async-done": "^1.1.1",
