@@ -7,7 +7,7 @@ var before = lab.before;
 var beforeEach = lab.beforeEach;
 var after = lab.after;
 var afterEach = lab.afterEach;
-var expect = require('lab').expect;
+var expect = require('code').expect;
 
 var bach = require('../');
 
@@ -47,9 +47,10 @@ describe('settleParallel', function(){
     }
     bach.settleParallel(fn1, slowFn, fn3, fnError)(function(errors, results){
       expect(errors)
-        .to.be.an('array')
-        .and.to.have.property('0')
-        .that.is.an.instanceof(Error);
+        .to.be.an.array()
+        .and.to.not.be.empty();
+      expect(errors[0])
+        .to.be.an.instanceof(Error);
       expect(results).to.deep.equal([1, 2, 3]);
       done();
     });
@@ -72,7 +73,7 @@ describe('settleParallel', function(){
       }
     })(function(error, results){
       expect(error).to.equal(null);
-      expect(arr).to.deep.include.members(fns);
+      expect(arr).to.deep.include(fns);
     });
     done();
   });

@@ -7,7 +7,7 @@ var before = lab.before;
 var beforeEach = lab.beforeEach;
 var after = lab.after;
 var afterEach = lab.afterEach;
-var expect = require('lab').expect;
+var expect = require('code').expect;
 
 var verifyArguments = require('../lib/helpers').verifyArguments;
 
