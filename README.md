@@ -1,7 +1,7 @@
 bach
 ====
 
-[![build status](https://secure.travis-ci.org/phated/bach.png)](http://travis-ci.org/phated/bach)
+[![build status](https://secure.travis-ci.org/gulpjs/bach.png)](http://travis-ci.org/gulpjs/bach)
 
 Compose your async functions with elegance
 
@@ -59,7 +59,7 @@ combinedFn(function(err, res){
 });
 ```
 
-Functions are called with [async-done](https://github.com/phated/async-done), so you can return a stream or promise.
+Functions are called with [async-done](https://github.com/gulpjs/async-done), so you can return a stream or promise.
 The function will complete when the stream ends/closes/errors or the promise fulfills/rejects.
 
 ```js
