@@ -63,7 +63,7 @@ describe('series', function() {
       after: function(result, storage) {
         expect(storage).to.equal(arr);
       },
-    })(function(error, results) {
+    })(function(error) {
       expect(error).to.equal(null);
       expect(arr).to.deep.include(fns);
     });
