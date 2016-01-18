@@ -34,4 +34,9 @@ describe('onSettled', function() {
     onSettled()(null, errors);
     done();
   });
+
+  it('should handle non-functions as callbacks', function(done) {
+    onSettled('not a function')(null, errors);
+    done();
+  });
 });
