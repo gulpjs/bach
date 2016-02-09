@@ -27,7 +27,12 @@
   "dependencies": {
     "async-done": "^1.1.1",
     "async-settle": "^0.2.1",
-    "lodash": "^4.3.0",
+    "lodash.filter": "^4.1.0",
+    "lodash.flatten": "^4.0.0",
+    "lodash.foreach": "^4.0.0",
+    "lodash.initial": "^4.0.1",
+    "lodash.last": "^3.0.0",
+    "lodash.map": "^4.1.0",
     "now-and-later": "0.0.6"
   },
   "devDependencies": {
