@@ -1,6 +1,6 @@
 {
   "name": "bach",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "Compose your async functions with elegance.",
   "author": "Gulp Team <team@gulpjs.com> (http://gulpjs.com/)",
   "contributors": [
