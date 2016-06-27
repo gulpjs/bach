@@ -1,33 +1,38 @@
-bach
-====
+<p align="center">
+  <a href="http://gulpjs.com">
+    <img height="257" width="114" src="https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png">
+  </a>
+</p>
 
-[![build status](https://secure.travis-ci.org/gulpjs/bach.png)](http://travis-ci.org/gulpjs/bach)
+# bach
 
-Compose your async functions with elegance
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![AppVeyor Build Status][appveyor-image]][appveyor-url] [![Coveralls Status][coveralls-image]][coveralls-url] [![Gitter chat][gitter-image]][gitter-url]
+
+Compose your async functions with elegance.
 
 ## Usage
 
-With Bach, it is very easy to compose async functions to run in series or parallel.
+With `bach`, it is very easy to compose async functions to run in series or parallel.
 
 ```js
 var bach = require('bach');
 
-function fn1(cb){
+function fn1(cb) {
   cb(null, 1);
 }
 
-function fn2(cb){
+function fn2(cb) {
   cb(null, 2);
 }
 
-function fn3(cb){
+function fn3(cb) {
   cb(null, 3);
 }
 
 var seriesFn = bach.series(fn1, fn2, fn3);
 // fn1, fn2, and fn3 will be run in series
-seriesFn(function(err, res){
-  if(err){ // in this example, err is undefined
+seriesFn(function(err, res) {
+  if (err) { // in this example, err is undefined
     // handle error
   }
   // handle results
@@ -36,8 +41,8 @@ seriesFn(function(err, res){
 
 var parallelFn = bach.parallel(fn1, fn2, fn3);
 // fn1, fn2, and fn3 will be run in parallel
-parallelFn(function(err, res){
-  if(err){ // in this example, err is undefined
+parallelFn(function(err, res) {
+  if (err) { // in this example, err is undefined
     // handle error
   }
   // handle results
@@ -45,13 +50,13 @@ parallelFn(function(err, res){
 });
 ```
 
-Since the composer functions just return a function that can be called, you can combine them.
+Since the composer functions return a function, you can combine them.
 
 ```js
 var combinedFn = bach.series(fn1, bach.parallel(fn2, fn3));
 // fn1 will be executed before fn2 and fn3 are run in parallel
-combinedFn(function(err, res){
-  if(err){ // in this example, err is undefined
+combinedFn(function(err, res) {
+  if (err) { // in this example, err is undefined
     // handle error
   }
   // handle results
@@ -59,26 +64,25 @@ combinedFn(function(err, res){
 });
 ```
 
-Functions are called with [async-done](https://github.com/gulpjs/async-done), so you can return a stream or promise.
-The function will complete when the stream ends/closes/errors or the promise fulfills/rejects.
+Functions are called with [async-done], so you can return a stream, promise, observable or child process. See [`async-done` completion and error resolution][completions] for more detail.
 
 ```js
 // streams
 var fs = require('fs');
 
-function streamFn1(){
+function streamFn1() {
   return fs.createReadStream('./example')
     .pipe(fs.createWriteStream('./example'));
 }
 
-function streamFn2(){
+function streamFn2() {
   return fs.createReadStream('./example')
     .pipe(fs.createWriteStream('./example'));
 }
 
 var parallelStreams = bach.parallel(streamFn1, streamFn2);
-parallelStreams(function(err){
-  if(err){ // in this example, err is undefined
+parallelStreams(function(err) {
+  if (err) { // in this example, err is undefined
     // handle error
   }
   // all streams have emitted an 'end' or 'close' event
@@ -89,17 +93,17 @@ parallelStreams(function(err){
 // promises
 var when = require('when');
 
-function promiseFn1(){
+function promiseFn1() {
   return when.resolve(1);
 }
 
-function promiseFn2(){
+function promiseFn2() {
   return when.resolve(2);
 }
 
 var parallelPromises = bach.parallel(promiseFn1, promiseFn2);
-parallelPromises(function(err, res){
-  if(err){ // in this example, err is undefined
+parallelPromises(function(err, res) {
+  if (err) { // in this example, err is undefined
     // handle error
   }
   // handle results
@@ -107,22 +111,22 @@ parallelPromises(function(err, res){
 });
 ```
 
-All errors are caught in a [domain](http://nodejs.org/api/domain.html) and passed to the final callback as the first argument.
+All errors are caught in a [domain] and passed to the final callback as the first argument.
 
 ```js
-function success(cb){
-  setTimeout(function(){
+function success(cb) {
+  setTimeout(function() {
     cb(null, 1);
   }, 500);
 }
 
-function error(){
+function error() {
   throw new Error('Thrown Error');
 }
 
 var errorThrownFn = bach.parallel(error, success);
-errorThrownFn(function(err, res){
-  if(err){
+errorThrownFn(function(err, res) {
+  if (err) {
     // handle error
     // in this example, err is an error caught by the domain
   }
@@ -131,25 +135,24 @@ errorThrownFn(function(err, res){
 });
 ```
 
-Something that may be encountered when an error happens in a parallel composition is the callback
-will be called as soon as the error happens. If you want to continue on error and wait until all
-functions have finished before calling the callback, use `settleSeries` or `settleParallel`.
+When an error happens in a parallel composition, the callback will be called as soon as the error happens.
+If you want to continue on error and wait until all functions have finished before calling the callback, use `settleSeries` or `settleParallel`.
 
 ```js
-function success(cb){
-  setTimeout(function(){
+function success(cb) {
+  setTimeout(function() {
     cb(null, 1);
   }, 500);
 }
 
-function error(cb){
+function error(cb) {
   cb(new Error('Async Error'));
 }
 
 var parallelSettlingFn = bach.settleParallel(success, error);
-parallelSettlingFn(function(err, res){
+parallelSettlingFn(function(err, res) {
   // all functions have finished executing
-  if(err){
+  if (err) {
     // handle error
     // in this example, err is an error passed to the callback
   }
@@ -160,65 +163,90 @@ parallelSettlingFn(function(err, res){
 
 ## API
 
-__All bach APIs return an invoker function that takes a single callback as its only parameter.
-The function signature is `function(error, results)`.__
+### `series(fns..., [extensions])`
 
-Each method can optionally be passed an object of [extension point functions](#extension-points)
-as the last argument.
+Takes a variable amount of functions (`fns`) to be called in series when the returned function is
+called. Optionally, takes an [extensions](#extensions) object as the last argument.
 
-### `series(fns..., [extensions])` => Function
+Returns an `invoker(cb)` function to be called to start the serial execution. The invoker function takes a callback (`cb`) with the `function(error, results)` signature.
 
-All functions (`fns`) passed to this function will be called in series when the returned function is
-called.  If an error occurs, execution will stop and the error will be passed to the callback function
-as the first parameter.
+If all functions complete successfully, the callback function will be called with all `results` as the second argument.
 
-__The error parameter will always be a single error.__
+If an error occurs, execution will stop and the error will be passed to the callback function as the first parameter. The error parameter will always be a single error.
 
-### `parallel(fns..., [extensions])` => Function
+### `parallel(fns..., [extensions])`
 
-All functions (`fns`) passed to this function will be called in parallel when the returned
-function is called.  If an error occurs, the error will be passed to the callback function
-as the first parameter. Any async functions that have not completed, will still complete,
-but their results will __not__ be available.
+Takes a variable amount of functions (`fns`) to be called in parallel when the returned function is
+called. Optionally, takes an [extensions](#extensions) object as the last argument.
 
-__The error parameter will always be a single error.__
+Returns an `invoker(cb)` function to be called to start the parallel execution. The invoker function takes a callback (`cb`) with the `function(error, results)` signature.
 
-### `settleSeries(fns..., [extensions])` => Function
+If all functions complete successfully, the callback function will be called with all `results` as the second argument.
 
-All functions (`fns`) passed to this function will be called in series when the returned function is
-called. All functions will always be called and the callback will receive all settled errors and results.
+If an error occurs, the callback function will be called with the error as the first parameter. Any async functions that have not completed, will still complete, but their results will __not__ be available. The error parameter will always be a single error.
 
-__The error parameter will always be an array of errors.__
+### `settleSeries(fns..., [extensions])`
 
-### `settleParallel(fns..., [extensions])` => Function
+Takes a variable amount of functions (`fns`) to be called in series when the returned function is
+called. Optionally, takes an [extensions](#extensions) object as the last argument.
 
-All functions (`fns`) passed to this function will be called in parallel when the returned function is
-called. All functions will always be called and the callback will receive all settled errors and results.
+Returns an `invoker(cb)` function to be called to start the serial execution. The invoker function takes a callback (`cb`) with the `function(error, results)` signature.
 
-__The error parameter will always be an array of errors.__
+All functions will always be called and the callback will receive all settled errors and results. If any errors occur, the error parameter will be an array of errors.
 
-### Extension Points
+### `settleParallel(fns..., [extensions])`
 
-An extension point object can contain:
+Takes a variable amount of functions (`fns`) to be called in parallel when the returned function is
+called. Optionally, takes an [extensions](#extensions) object as the last argument.
 
-#### `create(fn, key)` => `storage` object
+Returns an `invoker(cb)` function to be called to start the parallel execution. The invoker function takes a callback (`cb`) with the `function(error, results)` signature.
 
-Called before the async function or extension points are called. Receives the function and key to be
-executed in the future.  The return value should be any object and will be passed to the other extension
-point methods.  The storage object can keep any information needed between extension points and can
-be mutated within extension points.
+All functions will always be called and the callback will receive all settled errors and results. If any errors occur, the error parameter will be an array of errors.
 
-#### `before(storage)`
+### `extensions`
 
-Called before the async function is executed. Receives the storage object returned from the `create`
-extension point.
+The `extensions` object is used for specifying functions that give insight into the lifecycle of each function call. The possible extension points are `create`, `before`, `after` and `error`. If an extension point is not specified, it defaults to a no-op function.
 
-#### `after(storage)`
+##### `extensions.create(fn, index)`
 
-Called after the async function is executed and completes successfully. Receives the storage object
-returned from the `create` extension point.
+Called at the very beginning of each function call with the function (`fn`) being executed and the `index` from the array/arguments. If `create` returns a value (`storage`), it is passed to the `before`, `after` and `error` extension points.
 
-#### `error(storage)`
+If a value is not returned, an empty object is used as `storage` for each other extension point.
 
-Called after the async function is executed and errors. Receives the storage object returned from
-the `create` extension point.
+This is useful for tracking information across an iteration.
+
+##### `extensions.before(storage)`
+
+Called immediately before each function call with the `storage` value returned from the `create` extension point.
+
+##### `extensions.after(result, storage)`
+
+Called immediately after each function call with the `result` of the function and the `storage` value returned from the `create` extension point.
+
+##### `extensions.error(error, storage)`
+
+Called immediately after a failed function call with the `error` of the function and the `storage` value returned from the `create` extension point.
+
+## License
+
+MIT
+
+[domain]: http://nodejs.org/api/domain.html
+[async-done]: https://github.com/gulpjs/async-done
+[completions]: https://github.com/gulpjs/async-done#completion-and-error-resolution
+
+[downloads-image]: http://img.shields.io/npm/dm/bach.svg
+[npm-url]: https://www.npmjs.com/package/bach
+[npm-image]: http://img.shields.io/npm/v/bach.svg
+
+[travis-url]: https://travis-ci.org/gulpjs/bach
+[travis-image]: http://img.shields.io/travis/gulpjs/bach.svg?label=travis-ci
+
+[appveyor-url]: https://ci.appveyor.com/project/gulpjs/bach
+[appveyor-image]: https://img.shields.io/appveyor/ci/gulpjs/bach.svg?label=appveyor
+
+[coveralls-url]: https://coveralls.io/r/gulpjs/bach
+[coveralls-image]: http://img.shields.io/coveralls/gulpjs/bach/master.svg
+
+[gitter-url]: https://gitter.im/gulpjs/gulp
+[gitter-image]: https://badges.gitter.im/gulpjs/gulp.svg
