@@ -1,9 +1,6 @@
 'use strict';
 
-var lab = exports.lab = require('lab').script();
-var describe = lab.describe;
-var it = lab.it;
-var expect = require('code').expect;
+var expect = require('expect');
 
 var bach = require('../');
 
@@ -29,8 +26,8 @@ describe('series', function() {
 
   it('should execute functions in series, passing results', function(done) {
     bach.series(fn1, fn2, fn3)(function(error, results) {
-      expect(error).to.equal(null);
-      expect(results).to.deep.equal([1, 2, 3]);
+      expect(error).toEqual(null);
+      expect(results).toEqual([1, 2, 3]);
       done();
     });
   });
@@ -42,8 +39,8 @@ describe('series', function() {
       }, 500);
     }
     bach.series(fn1, slowFn, fn3, fnError)(function(error, results) {
-      expect(error).to.be.an.instanceof(Error);
-      expect(results).to.deep.equal([1, 2, 3, undefined]);
+      expect(error).toBeAn(Error);
+      expect(results).toEqual([1, 2, 3, undefined]);
       done();
     });
   });
@@ -53,19 +50,19 @@ describe('series', function() {
     var fns = [fn1, fn2, fn3];
     bach.series(fn1, fn2, fn3, {
       create: function(fn, idx) {
-        expect(fns).to.include(fn);
+        expect(fns).toInclude(fn);
         arr[idx] = fn;
         return arr;
       },
       before: function(storage) {
-        expect(storage).to.equal(arr);
+        expect(storage).toEqual(arr);
       },
       after: function(result, storage) {
-        expect(storage).to.equal(arr);
+        expect(storage).toEqual(arr);
       },
     })(function(error) {
-      expect(error).to.equal(null);
-      expect(arr).to.deep.include(fns);
+      expect(error).toEqual(null);
+      expect(arr).toEqual(fns);
     });
     done();
   });

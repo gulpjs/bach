@@ -1,9 +1,6 @@
 'use strict';
 
-var lab = exports.lab = require('lab').script();
-var describe = lab.describe;
-var it = lab.it;
-var expect = require('code').expect;
+var expect = require('expect');
 
 var onSettled = require('../lib/helpers').onSettled;
 
@@ -16,16 +13,16 @@ describe('onSettled', function() {
 
   it('should group all errors', function(done) {
     onSettled(function(errs, results) {
-      expect(errs).to.have.length(2);
-      expect(results).to.equal(null);
+      expect(errs.length).toEqual(2);
+      expect(results).toEqual(null);
       done();
     })(null, errors);
   });
 
   it('should error early if called with an error', function(done) {
     onSettled(function(err, results) {
-      expect(err).to.be.an.instanceof(Error);
-      expect(results).to.equal(null);
+      expect(err).toBeAn(Error);
+      expect(results).toEqual(null);
       done();
     })(new Error('Should not happen'));
   });

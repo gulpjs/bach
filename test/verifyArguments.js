@@ -1,9 +1,6 @@
 'use strict';
 
-var lab = exports.lab = require('lab').script();
-var describe = lab.describe;
-var it = lab.it;
-var expect = require('code').expect;
+var expect = require('expect');
 
 var verifyArguments = require('../lib/helpers').verifyArguments;
 
@@ -13,7 +10,7 @@ describe('verifyArguments', function() {
 
   it('should act as pass-through for a valid set of arguments', function(done) {
     var args = [validArg, validArg];
-    expect(verifyArguments(args)).to.deep.equal(args);
+    expect(verifyArguments(args)).toEqual(args);
     done();
   });
 
@@ -22,7 +19,7 @@ describe('verifyArguments', function() {
       verifyArguments([validArg, 'invalid', validArg]);
     }
 
-    expect(invalid).to.throw('Only functions can be combined, got string for argument 1');
+    expect(invalid).toThrow('Only functions can be combined, got string for argument 1');
     done();
   });
 
@@ -31,7 +28,7 @@ describe('verifyArguments', function() {
       verifyArguments([]);
     }
 
-    expect(empty).to.throw('A set of functions to combine is required');
+    expect(empty).toThrow('A set of functions to combine is required');
     done();
   });
 });

@@ -1,9 +1,6 @@
 'use strict';
 
-var lab = exports.lab = require('lab').script();
-var describe = lab.describe;
-var it = lab.it;
-var expect = require('code').expect;
+var expect = require('expect');
 
 var getExtensions = require('../lib/helpers').getExtensions;
 
@@ -11,13 +8,13 @@ describe('getExtensions', function() {
 
   it('should return the argument if it is an object', function(done) {
     var obj = {};
-    expect(getExtensions(obj)).to.equal(obj);
+    expect(getExtensions(obj)).toEqual(obj);
     done();
   });
 
   it('should return undefined if argument is not an object', function(done) {
     var fn = function() {};
-    expect(getExtensions(fn)).to.equal(undefined);
+    expect(getExtensions(fn)).toEqual(undefined);
     done();
   });
 });
