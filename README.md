@@ -246,7 +246,7 @@ MIT
 [appveyor-image]: https://img.shields.io/appveyor/ci/gulpjs/bach.svg?label=appveyor
 
 [coveralls-url]: https://coveralls.io/r/gulpjs/bach
-[coveralls-image]: http://img.shields.io/coveralls/gulpjs/bach/master.svg
+[coveralls-image]: http://img.shields.io/coveralls/gulpjs/bach/v1.0.0.svg
 
 [gitter-url]: https://gitter.im/gulpjs/gulp
 [gitter-image]: https://badges.gitter.im/gulpjs/gulp.svg
