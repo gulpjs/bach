@@ -27,14 +27,14 @@
     "coveralls": "npm run cover && istanbul-coveralls"
   },
   "dependencies": {
+    "arr-filter": "^1.1.1",
+    "arr-flatten": "^1.0.1",
+    "arr-map": "^2.0.0",
+    "array-each": "^0.1.1",
+    "array-initial": "^1.0.0",
+    "array-last": "^1.1.1",
     "async-done": "^1.2.2",
     "async-settle": "^1.0.0",
-    "lodash.filter": "^4.1.0",
-    "lodash.flatten": "^4.0.0",
-    "lodash.foreach": "^4.0.0",
-    "lodash.initial": "^4.0.1",
-    "lodash.last": "^3.0.0",
-    "lodash.map": "^4.1.0",
     "now-and-later": "^1.0.0"
   },
   "devDependencies": {
