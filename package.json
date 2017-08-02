@@ -35,7 +35,7 @@
     "array-last": "^1.1.1",
     "async-done": "^1.2.2",
     "async-settle": "^1.0.0",
-    "now-and-later": "^1.0.0"
+    "now-and-later": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^1.7.3",
