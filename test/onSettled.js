@@ -21,7 +21,7 @@ describe('onSettled', function() {
 
   it('should error early if called with an error', function(done) {
     onSettled(function(err, results) {
-      expect(err).toBeAn(Error);
+      expect(err).toBeInstanceOf(Error);
       expect(results).toEqual(null);
       done();
     })(new Error('Should not happen'));

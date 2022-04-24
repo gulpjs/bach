@@ -1,12 +1,12 @@
 <p align="center">
-  <a href="http://gulpjs.com">
+  <a href="https://gulpjs.com">
     <img height="257" width="114" src="https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png">
   </a>
 </p>
 
 # bach
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![AppVeyor Build Status][appveyor-image]][appveyor-url] [![Coveralls Status][coveralls-image]][coveralls-url] [![Gitter chat][gitter-image]][gitter-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][ci-image]][ci-url] [![Coveralls Status][coveralls-image]][coveralls-url]
 
 Compose your async functions with elegance.
 
@@ -231,22 +231,21 @@ Called immediately after a failed function call with the `error` of the function
 
 MIT
 
-[domain]: http://nodejs.org/api/domain.html
-[async-done]: https://github.com/gulpjs/async-done
-[completions]: https://github.com/gulpjs/async-done#completion-and-error-resolution
-
-[downloads-image]: http://img.shields.io/npm/dm/bach.svg
+<!-- prettier-ignore-start -->
+[downloads-image]: https://img.shields.io/npm/dm/bach.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/bach
-[npm-image]: http://img.shields.io/npm/v/bach.svg
+[npm-image]: https://img.shields.io/npm/v/bach.svg?style=flat-square
 
-[travis-url]: https://travis-ci.org/gulpjs/bach
-[travis-image]: http://img.shields.io/travis/gulpjs/bach.svg?label=travis-ci
-
-[appveyor-url]: https://ci.appveyor.com/project/gulpjs/bach
-[appveyor-image]: https://img.shields.io/appveyor/ci/gulpjs/bach.svg?label=appveyor
+[ci-url]: https://github.com/gulpjs/bach/actions?query=workflow:dev
+[ci-image]: https://img.shields.io/github/workflow/status/gulpjs/bach/dev?style=flat-square
 
 [coveralls-url]: https://coveralls.io/r/gulpjs/bach
-[coveralls-image]: http://img.shields.io/coveralls/gulpjs/bach.svg
+[coveralls-image]: https://img.shields.io/coveralls/gulpjs/bach.svg?style=flat-square
+<!-- prettier-ignore-start -->
 
-[gitter-url]: https://gitter.im/gulpjs/gulp
-[gitter-image]: https://badges.gitter.im/gulpjs/gulp.svg
+<!-- prettier-ignore-start -->
+[domain]: https://nodejs.org/api/domain.html
+[async-done]: https://github.com/gulpjs/async-done
+[completions]: https://github.com/gulpjs/async-done#completion-and-error-resolution
+<!-- prettier-ignore-end -->
+

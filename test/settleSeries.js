@@ -39,8 +39,8 @@ describe('settleSeries', function() {
       }, 500);
     }
     bach.settleSeries(fn1, slowFn, fn3, fnError)(function(errors, results) {
-      expect(errors).toBeAn(Array);
-      expect(errors[0]).toBeAn(Error);
+      expect(errors).toBeInstanceOf(Array);
+      expect(errors[0]).toBeInstanceOf(Error);
       expect(results).toEqual([1, 2, 3]);
       done();
     });
@@ -51,7 +51,7 @@ describe('settleSeries', function() {
     var fns = [fn1, fn2, fn3];
     bach.settleSeries(fn1, fn2, fn3, {
       create: function(fn, idx) {
-        expect(fns).toInclude(fn);
+        expect(fns).toContain(fn);
         arr[idx] = fn;
         return arr;
       },
