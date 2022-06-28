@@ -1,11 +1,3 @@
 {
-  "extends": "gulp",
-  "rules": {
-    "node/no-unsupported-features/es-syntax": [
-      2,
-      {
-        "version": ">=10.13.0"
-      }
-    ]
-  }
+  "extends": "gulp"
 }
