@@ -241,7 +241,7 @@ MIT
 
 [coveralls-url]: https://coveralls.io/r/gulpjs/bach
 [coveralls-image]: https://img.shields.io/coveralls/gulpjs/bach.svg?style=flat-square
-<!-- prettier-ignore-start -->
+<!-- prettier-ignore-end -->
 
 <!-- prettier-ignore-start -->
 [domain]: https://nodejs.org/api/domain.html
