@@ -97,14 +97,12 @@ parallelStreams(function (err) {
 
 ```js
 // promises
-var when = require('when');
-
 function promiseFn1() {
-  return when.resolve(1);
+  return Promise.resolve(1);
 }
 
 function promiseFn2() {
-  return when.resolve(2);
+  return Promise.resolve(2);
 }
 
 var parallelPromises = bach.parallel(promiseFn1, promiseFn2);
