@@ -50,7 +50,7 @@ describe('onSettled', function() {
     })(null, successes);
   });
 
-  it('should handle the case that result is nullish', function(done) {
+  it('should handle the case that result is not an array', function(done) {
     onSettled(function(errs, results) {
       expect(errs).toEqual(null);
       expect(results).toEqual(null);
