@@ -31,8 +31,9 @@ function fn3(cb) {
 
 var seriesFn = bach.series(fn1, fn2, fn3);
 // fn1, fn2, and fn3 will be run in series
-seriesFn(function(err, res) {
-  if (err) { // in this example, err is undefined
+seriesFn(function (err, res) {
+  if (err) {
+    // in this example, err is undefined
     // handle error
   }
   // handle results
@@ -41,8 +42,9 @@ seriesFn(function(err, res) {
 
 var parallelFn = bach.parallel(fn1, fn2, fn3);
 // fn1, fn2, and fn3 will be run in parallel
-parallelFn(function(err, res) {
-  if (err) { // in this example, err is undefined
+parallelFn(function (err, res) {
+  if (err) {
+    // in this example, err is undefined
     // handle error
   }
   // handle results
@@ -55,8 +57,9 @@ Since the composer functions return a function, you can combine them.
 ```js
 var combinedFn = bach.series(fn1, bach.parallel(fn2, fn3));
 // fn1 will be executed before fn2 and fn3 are run in parallel
-combinedFn(function(err, res) {
-  if (err) { // in this example, err is undefined
+combinedFn(function (err, res) {
+  if (err) {
+    // in this example, err is undefined
     // handle error
   }
   // handle results
@@ -71,18 +74,21 @@ Functions are called with [async-done], so you can return a stream, promise, obs
 var fs = require('fs');
 
 function streamFn1() {
-  return fs.createReadStream('./example')
+  return fs
+    .createReadStream('./example')
     .pipe(fs.createWriteStream('./example'));
 }
 
 function streamFn2() {
-  return fs.createReadStream('./example')
+  return fs
+    .createReadStream('./example')
     .pipe(fs.createWriteStream('./example'));
 }
 
 var parallelStreams = bach.parallel(streamFn1, streamFn2);
-parallelStreams(function(err) {
-  if (err) { // in this example, err is undefined
+parallelStreams(function (err) {
+  if (err) {
+    // in this example, err is undefined
     // handle error
   }
   // all streams have emitted an 'end' or 'close' event
@@ -102,8 +108,9 @@ function promiseFn2() {
 }
 
 var parallelPromises = bach.parallel(promiseFn1, promiseFn2);
-parallelPromises(function(err, res) {
-  if (err) { // in this example, err is undefined
+parallelPromises(function (err, res) {
+  if (err) {
+    // in this example, err is undefined
     // handle error
   }
   // handle results
@@ -115,7 +122,7 @@ All errors are caught in a [domain] and passed to the final callback as the firs
 
 ```js
 function success(cb) {
-  setTimeout(function() {
+  setTimeout(function () {
     cb(null, 1);
   }, 500);
 }
@@ -125,7 +132,7 @@ function error() {
 }
 
 var errorThrownFn = bach.parallel(error, success);
-errorThrownFn(function(err, res) {
+errorThrownFn(function (err, res) {
   if (err) {
     // handle error
     // in this example, err is an error caught by the domain
@@ -140,7 +147,7 @@ If you want to continue on error and wait until all functions have finished befo
 
 ```js
 function success(cb) {
-  setTimeout(function() {
+  setTimeout(function () {
     cb(null, 1);
   }, 500);
 }
@@ -150,7 +157,7 @@ function error(cb) {
 }
 
 var parallelSettlingFn = bach.settleParallel(success, error);
-parallelSettlingFn(function(err, res) {
+parallelSettlingFn(function (err, res) {
   // all functions have finished executing
   if (err) {
     // handle error
@@ -183,7 +190,7 @@ Returns an `invoker(cb)` function to be called to start the parallel execution. 
 
 If all functions complete successfully, the callback function will be called with all `results` as the second argument.
 
-If an error occurs, the callback function will be called with the error as the first parameter. Any async functions that have not completed, will still complete, but their results will __not__ be available. The error parameter will always be a single error.
+If an error occurs, the callback function will be called with the error as the first parameter. Any async functions that have not completed, will still complete, but their results will **not** be available. The error parameter will always be a single error.
 
 ### `settleSeries(fns..., [extensions])`
 
@@ -248,4 +255,3 @@ MIT
 [async-done]: https://github.com/gulpjs/async-done
 [completions]: https://github.com/gulpjs/async-done#completion-and-error-resolution
 <!-- prettier-ignore-end -->
-
