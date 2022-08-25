@@ -170,10 +170,10 @@ parallelSettlingFn(function (err, res) {
 
 ## API
 
-### `series(fns..., [extensions])`
+### `series(fns..., [options])`
 
 Takes a variable amount of functions (`fns`) to be called in series when the returned function is
-called. Optionally, takes an [extensions](#extensions) object as the last argument.
+called. Optionally, takes an [options](#options) object as the last argument.
 
 Returns an `invoker(cb)` function to be called to start the serial execution. The invoker function takes a callback (`cb`) with the `function(error, results)` signature.
 
@@ -181,10 +181,10 @@ If all functions complete successfully, the callback function will be called wit
 
 If an error occurs, execution will stop and the error will be passed to the callback function as the first parameter. The error parameter will always be a single error.
 
-### `parallel(fns..., [extensions])`
+### `parallel(fns..., [options])`
 
 Takes a variable amount of functions (`fns`) to be called in parallel when the returned function is
-called. Optionally, takes an [extensions](#extensions) object as the last argument.
+called. Optionally, takes an [options](#options) object as the last argument.
 
 Returns an `invoker(cb)` function to be called to start the parallel execution. The invoker function takes a callback (`cb`) with the `function(error, results)` signature.
 
@@ -192,29 +192,35 @@ If all functions complete successfully, the callback function will be called wit
 
 If an error occurs, the callback function will be called with the error as the first parameter. Any async functions that have not completed, will still complete, but their results will **not** be available. The error parameter will always be a single error.
 
-### `settleSeries(fns..., [extensions])`
+### `settleSeries(fns..., [options])`
 
 Takes a variable amount of functions (`fns`) to be called in series when the returned function is
-called. Optionally, takes an [extensions](#extensions) object as the last argument.
+called. Optionally, takes an [options](#options) object as the last argument.
 
 Returns an `invoker(cb)` function to be called to start the serial execution. The invoker function takes a callback (`cb`) with the `function(error, results)` signature.
 
 All functions will always be called and the callback will receive all settled errors and results. If any errors occur, the error parameter will be an array of errors.
 
-### `settleParallel(fns..., [extensions])`
+### `settleParallel(fns..., [options])`
 
 Takes a variable amount of functions (`fns`) to be called in parallel when the returned function is
-called. Optionally, takes an [extensions](#extensions) object as the last argument.
+called. Optionally, takes an [options](#options) object as the last argument.
 
 Returns an `invoker(cb)` function to be called to start the parallel execution. The invoker function takes a callback (`cb`) with the `function(error, results)` signature.
 
 All functions will always be called and the callback will receive all settled errors and results. If any errors occur, the error parameter will be an array of errors.
 
-### `extensions`
+### `options`
 
-The `extensions` object is used for specifying functions that give insight into the lifecycle of each function call. The possible extension points are `create`, `before`, `after` and `error`. If an extension point is not specified, it defaults to a no-op function.
+The `options` object is primarily used for specifying functions that give insight into the lifecycle of each function call. The possible extension points are `create`, `before`, `after` and `error`. If an extension point is not specified, it defaults to a no-op function.
 
-##### `extensions.create(fn, index)`
+The `options` object for `parallel` and `settleParallel` also allows specifying `concurrency` in which to run your functions. By default, your functions will run at maximum concurrency.
+
+##### `options.concurrency`
+
+Limits the amount of functions allowed to run at a given time.
+
+##### `options.create(fn, index)`
 
 Called at the very beginning of each function call with the function (`fn`) being executed and the `index` from the array/arguments. If `create` returns a value (`storage`), it is passed to the `before`, `after` and `error` extension points.
 
@@ -222,15 +228,15 @@ If a value is not returned, an empty object is used as `storage` for each other 
 
 This is useful for tracking information across an iteration.
 
-##### `extensions.before(storage)`
+##### `options.before(storage)`
 
 Called immediately before each function call with the `storage` value returned from the `create` extension point.
 
-##### `extensions.after(result, storage)`
+##### `options.after(result, storage)`
 
 Called immediately after each function call with the `result` of the function and the `storage` value returned from the `create` extension point.
 
-##### `extensions.error(error, storage)`
+##### `options.error(error, storage)`
 
 Called immediately after a failed function call with the `error` of the function and the `storage` value returned from the `create` extension point.
 
