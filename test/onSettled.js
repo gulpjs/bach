@@ -9,6 +9,11 @@ var errors = [
   { state: 'error', value: new Error('Error 2') },
 ];
 
+var successes = [
+  { state: 'success', value: 'Success 1' },
+  { state: 'success', value: 'Success 2' },
+];
+
 describe('onSettled', function() {
 
   it('should group all errors', function(done) {
@@ -21,7 +26,7 @@ describe('onSettled', function() {
 
   it('should error early if called with an error', function(done) {
     onSettled(function(err, results) {
-      expect(err).toBeAn(Error);
+      expect(err).toBeInstanceOf(Error);
       expect(results).toEqual(null);
       done();
     })(new Error('Should not happen'));
@@ -35,5 +40,21 @@ describe('onSettled', function() {
   it('should handle non-functions as callbacks', function(done) {
     onSettled('not a function')(null, errors);
     done();
+  });
+
+  it('should pass `value` props of results if no error', function(done) {
+    onSettled(function(errs, results) {
+      expect(errs).toEqual(null);
+      expect(results).toEqual(['Success 1', 'Success 2']);
+      done();
+    })(null, successes);
+  });
+
+  it('should handle the case that result is not an array', function(done) {
+    onSettled(function(errs, results) {
+      expect(errs).toEqual(null);
+      expect(results).toEqual(null);
+      done();
+    })(null, null);
   });
 });

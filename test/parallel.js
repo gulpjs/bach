@@ -40,7 +40,7 @@ describe('parallel', function() {
       }, 500);
     }
     bach.parallel(fn1, slowFn, fn3, fnError)(function(error, results) {
-      expect(error).toBeAn(Error);
+      expect(error).toBeInstanceOf(Error);
       expect(results).toEqual([1, undefined, 3, undefined]);
       done();
     });
@@ -51,7 +51,7 @@ describe('parallel', function() {
     var fns = [fn1, fn2, fn3];
     bach.parallel(fn1, fn2, fn3, {
       create: function(fn, idx) {
-        expect(fns).toInclude(fn);
+        expect(fns).toContain(fn);
         arr[idx] = fn;
         return arr;
       },
