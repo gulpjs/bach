@@ -80,8 +80,8 @@ describe('settleSeries', function () {
     })(function (error) {
       expect(error).toEqual(null);
       expect(arr).toEqual(fns);
+      done();
     });
-    done();
   });
 
   it('allows array of functions & extensions object', function (done) {
@@ -102,7 +102,7 @@ describe('settleSeries', function () {
     })(function (error) {
       expect(error).toEqual(null);
       expect(arr).toEqual(fns);
+      done();
     });
-    done();
   });
 });
