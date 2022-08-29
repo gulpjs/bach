@@ -35,6 +35,14 @@ describe('series', function () {
     });
   });
 
+  it('allows an array of functions', function (done) {
+    bach.series([fn1, fn2, fn3])(function (error, results) {
+      expect(error).toEqual(null);
+      expect(results).toEqual([1, 2, 3]);
+      done();
+    });
+  });
+
   it('should execute functions in series, passing error', function (done) {
     function slowFn(done) {
       setTimeout(function () {
@@ -57,6 +65,28 @@ describe('series', function () {
     var arr = [];
     var fns = [fn1, fn2, fn3];
     bach.series(fn1, fn2, fn3, {
+      create: function (fn, idx) {
+        expect(fns).toContain(fn);
+        arr[idx] = fn;
+        return arr;
+      },
+      before: function (storage) {
+        expect(storage).toEqual(arr);
+      },
+      after: function (result, storage) {
+        expect(storage).toEqual(arr);
+      },
+    })(function (error) {
+      expect(error).toEqual(null);
+      expect(arr).toEqual(fns);
+    });
+    done();
+  });
+
+  it('allows array of functions & extensions object', function (done) {
+    var arr = [];
+    var fns = [fn1, fn2, fn3];
+    bach.series([fn1, fn2, fn3], {
       create: function (fn, idx) {
         expect(fns).toContain(fn);
         arr[idx] = fn;

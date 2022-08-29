@@ -13,6 +13,18 @@ describe('verifyArguments', function () {
     done();
   });
 
+  it('flattens arrays one level deep', function (done) {
+    var args = [validArg, validArg];
+    expect(verifyArguments([args])).toEqual(args);
+    done();
+  });
+
+  it('only flattens one level of multi-level array', function (done) {
+    var args = [validArg, [validArg]];
+    expect(verifyArguments([args])).toEqual(args);
+    done();
+  });
+
   it('should throw descriptive error message on invalid argument', function (done) {
     function invalid() {
       verifyArguments([validArg, 'invalid', validArg]);
