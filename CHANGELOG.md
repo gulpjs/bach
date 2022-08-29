@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.1](https://www.github.com/gulpjs/bach/compare/v2.0.0...v2.0.1) (2022-08-29)
+
+
+### Bug Fixes
+
+* Allow an array of functions as argument ([0fdef52](https://www.github.com/gulpjs/bach/commit/0fdef521beb77592fe6cc9264bb6a2e76585b127))
+
 ## [2.0.0](https://www.github.com/gulpjs/bach/compare/v1.2.0...v2.0.0) (2022-08-25)
 
 
