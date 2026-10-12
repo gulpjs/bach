@@ -263,3 +263,9 @@ MIT
 [coveralls-url]: https://coveralls.io/r/gulpjs/bach
 [coveralls-image]: https://img.shields.io/coveralls/gulpjs/bach/main.svg?style=flat-square
 <!-- prettier-ignore-end -->
+
+<!-- prettier-ignore-start -->
+[domain]: https://nodejs.org/api/domain.html
+[async-done]: https://github.com/gulpjs/async-done
+[completions]: https://github.com/gulpjs/async-done#completion-and-error-resolution
+<!-- prettier-ignore-end -->
