@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/gulpjs/bach/compare/v2.0.1...v3.0.0) (2026-10-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Normalize repository, dropping Node <22.15.0 ([#39](https://github.com/gulpjs/bach/issues/39))
+
+### Miscellaneous Chores
+
+* Normalize repository, dropping Node &lt;22.15.0 ([#39](https://github.com/gulpjs/bach/issues/39)) ([6ed494e](https://github.com/gulpjs/bach/commit/6ed494e22050febcd7f5fe1e2be515188eb0082f))
+
 ### [2.0.1](https://www.github.com/gulpjs/bach/compare/v2.0.0...v2.0.1) (2022-08-29)
 
 
