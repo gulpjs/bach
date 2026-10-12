@@ -15,7 +15,7 @@ Compose your async functions with elegance.
 With `bach`, it is very easy to compose async functions to run in series or parallel.
 
 ```js
-var bach = require('bach');
+var bach = require("bach");
 
 function fn1(cb) {
   cb(null, 1);
@@ -71,18 +71,18 @@ Functions are called with [async-done], so you can return a stream, promise, obs
 
 ```js
 // streams
-var fs = require('fs');
+var fs = require("fs");
 
 function streamFn1() {
   return fs
-    .createReadStream('./example')
-    .pipe(fs.createWriteStream('./example'));
+    .createReadStream("./example")
+    .pipe(fs.createWriteStream("./example"));
 }
 
 function streamFn2() {
   return fs
-    .createReadStream('./example')
-    .pipe(fs.createWriteStream('./example'));
+    .createReadStream("./example")
+    .pipe(fs.createWriteStream("./example"));
 }
 
 var parallelStreams = bach.parallel(streamFn1, streamFn2);
@@ -126,7 +126,7 @@ function success(cb) {
 }
 
 function error() {
-  throw new Error('Thrown Error');
+  throw new Error("Thrown Error");
 }
 
 var errorThrownFn = bach.parallel(error, success);
@@ -151,7 +151,7 @@ function success(cb) {
 }
 
 function error(cb) {
-  cb(new Error('Async Error'));
+  cb(new Error("Async Error"));
 }
 
 var parallelSettlingFn = bach.settleParallel(success, error);
@@ -238,6 +238,16 @@ Called immediately after each function call with the `result` of the function an
 
 Called immediately after a failed function call with the `error` of the function and the `storage` value returned from the `create` extension point.
 
+## Strict No LLM / No AI Policy
+
+No LLMs for issues.
+
+No LLMs for patches / pull requests.
+
+No LLMs for comments on the bug tracker, including translation.
+
+English is encouraged, but not required. You are welcome to post in your native language and rely on others to have their own translation tools of choice to interpret your words.
+
 ## License
 
 MIT
@@ -247,11 +257,11 @@ MIT
 [npm-url]: https://www.npmjs.com/package/bach
 [npm-image]: https://img.shields.io/npm/v/bach.svg?style=flat-square
 
-[ci-url]: https://github.com/gulpjs/bach/actions?query=workflow:dev
-[ci-image]: https://img.shields.io/github/actions/workflow/status/gulpjs/bach/dev.yml?branch=master&style=flat-square
+[ci-url]: https://github.com/gulpjs/bach/actions/workflows/dev.yml
+[ci-image]: https://img.shields.io/github/actions/workflow/status/gulpjs/bach/dev.yml?style=flat-square
 
 [coveralls-url]: https://coveralls.io/r/gulpjs/bach
-[coveralls-image]: https://img.shields.io/coveralls/gulpjs/bach.svg?style=flat-square
+[coveralls-image]: https://img.shields.io/coveralls/gulpjs/bach/main.svg?style=flat-square
 <!-- prettier-ignore-end -->
 
 <!-- prettier-ignore-start -->

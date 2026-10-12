@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-var expect = require('expect');
+var expect = require("expect");
 
-var bach = require('../');
+var bach = require("../");
 
 function fn1(done) {
   done(null, 1);
@@ -19,15 +19,15 @@ function fn3(done) {
 }
 
 function fnError(done) {
-  done(new Error('An Error Occurred'));
+  done(new Error("An Error Occurred"));
 }
 
-describe('settleSeries', function () {
-  it('should execute functions in series, passing settled results', function (done) {
+describe("settleSeries", function () {
+  it("should execute functions in series, passing settled results", function (done) {
     bach.settleSeries(
       fn1,
       fn2,
-      fn3
+      fn3,
     )(function (errors, results) {
       expect(errors).toEqual(null);
       expect(results).toEqual([1, 2, 3]);
@@ -35,7 +35,7 @@ describe('settleSeries', function () {
     });
   });
 
-  it('allows an array of functions', function (done) {
+  it("allows an array of functions", function (done) {
     bach.settleSeries([fn1, fn2, fn3])(function (errors, results) {
       expect(errors).toEqual(null);
       expect(results).toEqual([1, 2, 3]);
@@ -43,7 +43,7 @@ describe('settleSeries', function () {
     });
   });
 
-  it('should execute functions in series, passing settled errors and results', function (done) {
+  it("should execute functions in series, passing settled errors and results", function (done) {
     function slowFn(done) {
       setTimeout(function () {
         done(null, 2);
@@ -53,7 +53,7 @@ describe('settleSeries', function () {
       fn1,
       slowFn,
       fn3,
-      fnError
+      fnError,
     )(function (errors, results) {
       expect(errors).toBeInstanceOf(Array);
       expect(errors[0]).toBeInstanceOf(Error);
@@ -62,7 +62,7 @@ describe('settleSeries', function () {
     });
   });
 
-  it('should take extension points and call them for each function', function (done) {
+  it("should take extension points and call them for each function", function (done) {
     var arr = [];
     var fns = [fn1, fn2, fn3];
     bach.settleSeries(fn1, fn2, fn3, {
@@ -84,7 +84,7 @@ describe('settleSeries', function () {
     });
   });
 
-  it('allows array of functions & extensions object', function (done) {
+  it("allows array of functions & extensions object", function (done) {
     var arr = [];
     var fns = [fn1, fn2, fn3];
     bach.settleSeries([fn1, fn2, fn3], {
