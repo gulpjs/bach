@@ -1,19 +1,18 @@
 "use strict";
 
-var expect = require("expect");
+var assert = require("node:assert");
+var { describe, it } = require("node:test");
 
 var getOptions = require("../lib/helpers").getOptions;
 
 describe("getOptions", function () {
-  it("should return the argument if it is an object", function (done) {
+  it("should return the argument if it is an object", function () {
     var args = [{}];
-    expect(getOptions(args)).toEqual({});
-    done();
+    assert.deepStrictEqual(getOptions(args), {});
   });
 
-  it("should return undefined if argument is not an object", function (done) {
+  it("should return undefined if argument is not an object", function () {
     var args = [function () {}];
-    expect(getOptions(args)).toEqual(undefined);
-    done();
+    assert.strictEqual(getOptions(args), undefined);
   });
 });

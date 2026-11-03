@@ -1,6 +1,7 @@
 "use strict";
 
-var expect = require("expect");
+var assert = require("node:assert");
+var { describe, it } = require("node:test");
 
 var bach = require("../");
 
@@ -23,30 +24,30 @@ function fnError(done) {
 }
 
 describe("series", function () {
-  it("should execute functions in series, passing results", function (done) {
+  it("should execute functions in series, passing results", function (t, done) {
     bach.series(
       fn1,
       fn2,
       fn3,
     )(function (error, results) {
-      expect(error).toEqual(null);
-      expect(results).toEqual([1, 2, 3]);
+      assert.strictEqual(error, null);
+      assert.deepStrictEqual(results, [1, 2, 3]);
       done();
     });
   });
 
-  it("allows an array of functions", function (done) {
+  it("allows an array of functions", function (t, done) {
     bach.series([fn1, fn2, fn3])(function (error, results) {
-      expect(error).toEqual(null);
-      expect(results).toEqual([1, 2, 3]);
+      assert.strictEqual(error, null);
+      assert.deepStrictEqual(results, [1, 2, 3]);
       done();
     });
   });
 
-  it("should execute functions in series, passing error", function (done) {
-    function slowFn(done) {
+  it("should execute functions in series, passing error", function (t, done) {
+    function slowFn(cb) {
       setTimeout(function () {
-        done(null, 2);
+        cb(null, 2);
       }, 500);
     }
     bach.series(
@@ -55,52 +56,52 @@ describe("series", function () {
       fn3,
       fnError,
     )(function (error, results) {
-      expect(error).toBeInstanceOf(Error);
-      expect(results).toEqual([1, 2, 3, undefined]);
+      assert.ok(error instanceof Error);
+      assert.deepStrictEqual(results, [1, 2, 3, undefined]);
       done();
     });
   });
 
-  it("should take extension points and call them for each function", function (done) {
+  it("should take extension points and call them for each function", function (t, done) {
     var arr = [];
     var fns = [fn1, fn2, fn3];
     bach.series(fn1, fn2, fn3, {
       create: function (fn, idx) {
-        expect(fns).toContain(fn);
+        assert.strictEqual(fns.includes(fn), true);
         arr[idx] = fn;
         return arr;
       },
       before: function (storage) {
-        expect(storage).toEqual(arr);
+        assert.deepStrictEqual(storage, arr);
       },
       after: function (result, storage) {
-        expect(storage).toEqual(arr);
+        assert.deepStrictEqual(storage, arr);
       },
     })(function (error) {
-      expect(error).toEqual(null);
-      expect(arr).toEqual(fns);
+      assert.strictEqual(error, null);
+      assert.deepStrictEqual(arr, fns);
       done();
     });
   });
 
-  it("allows array of functions & extensions object", function (done) {
+  it("allows array of functions & extensions object", function (t, done) {
     var arr = [];
     var fns = [fn1, fn2, fn3];
     bach.series([fn1, fn2, fn3], {
       create: function (fn, idx) {
-        expect(fns).toContain(fn);
+        assert.strictEqual(fns.includes(fn), true);
         arr[idx] = fn;
         return arr;
       },
       before: function (storage) {
-        expect(storage).toEqual(arr);
+        assert.deepStrictEqual(storage, arr);
       },
       after: function (result, storage) {
-        expect(storage).toEqual(arr);
+        assert.deepStrictEqual(storage, arr);
       },
     })(function (error) {
-      expect(error).toEqual(null);
-      expect(arr).toEqual(fns);
+      assert.strictEqual(error, null);
+      assert.deepStrictEqual(arr, fns);
       done();
     });
   });

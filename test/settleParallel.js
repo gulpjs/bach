@@ -1,6 +1,7 @@
 "use strict";
 
-var expect = require("expect");
+var assert = require("node:assert");
+var { describe, it } = require("node:test");
 
 var bach = require("../");
 
@@ -23,30 +24,30 @@ function fnError(done) {
 }
 
 describe("settleParallel", function () {
-  it("should execute functions in parallel, passing settled results", function (done) {
+  it("should execute functions in parallel, passing settled results", function (t, done) {
     bach.settleParallel(
       fn1,
       fn2,
       fn3,
     )(function (errors, results) {
-      expect(errors).toEqual(null);
-      expect(results).toEqual([1, 2, 3]);
+      assert.strictEqual(errors, null);
+      assert.deepStrictEqual(results, [1, 2, 3]);
       done();
     });
   });
 
-  it("allows an array of functions", function (done) {
+  it("allows an array of functions", function (t, done) {
     bach.settleParallel([fn1, fn2, fn3])(function (errors, results) {
-      expect(errors).toEqual(null);
-      expect(results).toEqual([1, 2, 3]);
+      assert.strictEqual(errors, null);
+      assert.deepStrictEqual(results, [1, 2, 3]);
       done();
     });
   });
 
-  it("should execute functions in parallel, passing settled errors and results", function (done) {
-    function slowFn(done) {
+  it("should execute functions in parallel, passing settled errors and results", function (t, done) {
+    function slowFn(cb) {
       setTimeout(function () {
-        done(null, 2);
+        cb(null, 2);
       }, 500);
     }
     bach.settleParallel(
@@ -55,53 +56,53 @@ describe("settleParallel", function () {
       fn3,
       fnError,
     )(function (errors, results) {
-      expect(errors).toBeInstanceOf(Array);
-      expect(errors[0]).toBeInstanceOf(Error);
-      expect(results).toEqual([1, 2, 3]);
+      assert.ok(Array.isArray(errors));
+      assert.ok(errors[0] instanceof Error);
+      assert.deepStrictEqual(results, [1, 2, 3]);
       done();
     });
   });
 
-  it("should take extension points and call them for each function", function (done) {
+  it("should take extension points and call them for each function", function (t, done) {
     var arr = [];
     var fns = [fn1, fn2, fn3];
     bach.settleParallel(fn1, fn2, fn3, {
       create: function (fn, idx) {
-        expect(fns).toContain(fn);
+        assert.strictEqual(fns.includes(fn), true);
         arr[idx] = fn;
         return arr;
       },
       before: function (storage) {
-        expect(storage).toEqual(arr);
+        assert.deepStrictEqual(storage, arr);
       },
       after: function (result, storage) {
-        expect(storage).toEqual(arr);
+        assert.deepStrictEqual(storage, arr);
       },
     })(function (error) {
-      expect(error).toEqual(null);
-      expect(arr).toEqual(fns);
+      assert.strictEqual(error, null);
+      assert.deepStrictEqual(arr, fns);
       done();
     });
   });
 
-  it("allows array of functions & extensions object", function (done) {
+  it("allows array of functions & extensions object", function (t, done) {
     var arr = [];
     var fns = [fn1, fn2, fn3];
     bach.settleParallel([fn1, fn2, fn3], {
       create: function (fn, idx) {
-        expect(fns).toContain(fn);
+        assert.strictEqual(fns.includes(fn), true);
         arr[idx] = fn;
         return arr;
       },
       before: function (storage) {
-        expect(storage).toEqual(arr);
+        assert.deepStrictEqual(storage, arr);
       },
       after: function (result, storage) {
-        expect(storage).toEqual(arr);
+        assert.deepStrictEqual(storage, arr);
       },
     })(function (error) {
-      expect(error).toEqual(null);
-      expect(arr).toEqual(fns);
+      assert.strictEqual(error, null);
+      assert.deepStrictEqual(arr, fns);
       done();
     });
   });
