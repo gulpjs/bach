@@ -56,7 +56,7 @@ describe("settleSeries", function () {
       fn3,
       fnError,
     )(function (errors, results) {
-      assert.ok(errors instanceof Array);
+      assert.ok(Array.isArray(errors));
       assert.ok(errors[0] instanceof Error);
       assert.deepStrictEqual(results, [1, 2, 3]);
       done();
